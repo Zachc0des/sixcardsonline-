@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Six Cards Online — Websites, Social &amp; Ads</title>
+<script>
+  (function(){
+    var t = null;
+    try { t = localStorage.getItem('sixcards-theme'); } catch(e){}
+    if (t !== 'dark' && t !== 'light') { t = 'light'; }
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F7FB;--paper-2:#EBEFF7;--ink:#0B1424;--ink-soft:#3D4A63;--mist:#7C8AA5;
+    --cobalt:#2E6BFF;--cobalt-deep:#1B3FA8;--brass:#C99A4B;--brass-deep:#8A6B37;
+    --violet:#7B2FF7;--line:#D8DFEC;--night:#0A1220;
+    --card:#FFFFFF;--nav-bg:rgba(245,247,251,0.9);--btn-text:#FFFFFF;--shadow:rgba(11,20,36,0.12);
+    color-scheme:light;
+  }
+  :root[data-theme="dark"]{
+    --paper:#000;--paper-2:#0A0A0A;--ink:#F2F2F2;--ink-soft:#B8B8B8;--mist:#8C8C8C;
+    --cobalt:#5B8BFF;--brass-deep:#D9AE63;--violet:#A06BFF;
+    --line:#262626;--night:#050505;--card:#111;--nav-bg:rgba(0,0,0,0.88);--btn-text:#000;--shadow:rgba(0,0,0,0.7);
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:'Share Tech Mono',monospace;line-height:1.7;transition:background .25s,color .25s;}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px;}
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.08;}
+  .eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mist);}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:10;background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px;}
+  nav .logo{font-size:13px;letter-spacing:.14em;color:var(--ink);text-decoration:none;}
+  nav .logo b{font-weight:400;color:var(--cobalt);}
+  nav .links{display:flex;gap:20px;font-size:11px;letter-spacing:.08em;}
+  nav .links a{color:var(--ink-soft);text-decoration:none;}
+  nav .links a:hover{color:var(--cobalt);}
+  @media(max-width:860px){nav .links{display:none;}}
+  .nav-actions{display:flex;align-items:center;gap:8px;}
+  .theme-btn,.online-btn{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .18s;white-space:nowrap;text-decoration:none;}
+  .theme-btn:hover,.online-btn:hover{border-color:var(--cobalt);color:var(--cobalt);}
+  .online-btn svg{width:15px;height:15px;opacity:.7;}
+  .online-btn.on{border-color:var(--cobalt);color:var(--cobalt);}
+
+  /* hero */
+  header{padding:84px 0 64px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(600px 300px at 18% 20%,rgba(46,107,255,.08),transparent 65%),radial-gradient(600px 300px at 82% 25%,rgba(201,154,75,.09),transparent 65%);}
+  header .wrap{position:relative;}
+  .globe-wrap{width:64px;height:64px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;}
+  .globe-mark{width:56px;height:56px;overflow:visible;color:var(--ink);opacity:.85;filter:drop-shadow(0 0 4px rgba(34,197,94,.4));animation:glow 3s ease-in-out infinite;}
+  .globe-mark g circle{fill:#22C55E;}
+  .globe-mark .pr{transform-box:fill-box;transform-origin:center;opacity:0;animation:dping 3.2s ease-out infinite;}
+  @keyframes dping{0%{transform:scale(1);opacity:.8;}70%,100%{transform:scale(4.5);opacity:0;}}
+  @keyframes glow{0%,100%{filter:drop-shadow(0 0 2px rgba(34,197,94,.25));}50%{filter:drop-shadow(0 0 7px rgba(34,197,94,.7));}}
+  .dots{display:inline-flex;gap:3px;margin-left:5px;vertical-align:middle;}
+  .dots i{width:3px;height:3px;border-radius:50%;background:#22C55E;opacity:.2;animation:post 2.4s ease-in-out infinite;}
+  .dots i:nth-child(2){animation-delay:.4s;} .dots i:nth-child(3){animation-delay:.8s;}
+  @keyframes post{0%,60%,100%{opacity:.2;transform:translateY(0);}25%{opacity:1;transform:translateY(-2px);}}
+  @media (prefers-reduced-motion:reduce){.globe-mark,.globe-mark .pr,.dots i{animation:none;}.dots i{opacity:.7;}}
+  header h1{font-size:clamp(38px,6.4vw,62px);margin:16px auto 18px;max-width:700px;}
+  header h1 em{font-style:italic;color:var(--cobalt);}
+  header p.lede{font-size:13px;color:var(--ink-soft);max-width:600px;margin:0 auto 34px;}
+  .btn{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.06em;text-decoration:none;padding:14px 26px;border-radius:8px;transition:all .18s;cursor:pointer;}
+  .btn.solid{background:var(--ink);color:var(--btn-text);border:1px solid var(--ink);}
+  .btn.solid:hover{background:var(--cobalt);border-color:var(--cobalt);color:#fff;box-shadow:0 8px 24px rgba(46,107,255,.3);}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}
+  .btn.ghost:hover{border-color:var(--cobalt);color:var(--cobalt);}
+  .hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+  section{padding:74px 0;}
+  section.alt{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .sec-head{text-align:center;max-width:620px;margin:0 auto 46px;}
+  .sec-head h2{font-size:clamp(28px,4.4vw,40px);margin:12px 0;}
+  .sec-head h2 em{font-style:italic;color:var(--cobalt);}
+  .sec-head p{font-size:12.5px;color:var(--ink-soft);}
+
+  /* service panels */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:900px){.svc-grid{grid-template-columns:1fr;}}
+  .svc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 26px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;}
+  .svc:hover{box-shadow:0 16px 36px var(--shadow);transform:translateY(-3px);}
+  .svc::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:linear-gradient(90deg,var(--cobalt),var(--cobalt-deep));}
+  .svc.s2::before{background:linear-gradient(90deg,var(--violet),#F107A3);}
+  .svc.s3::before{background:linear-gradient(90deg,var(--brass),var(--brass-deep));}
+  .svc .num{font-size:11px;color:var(--cobalt);border:1px solid var(--line);border-radius:5px;padding:3px 7px;align-self:flex-start;margin-bottom:12px;}
+  .svc h3{font-size:26px;font-style:italic;margin-bottom:10px;}
+  .svc p{font-size:12px;color:var(--ink-soft);margin-bottom:14px;}
+  .svc ul{list-style:none;padding:0;margin-bottom:16px;flex:1;}
+  .svc li{font-size:11.5px;color:var(--ink-soft);padding:6px 0 6px 20px;position:relative;border-top:1px dashed var(--line);}
+  .svc li::before{content:"→";position:absolute;left:0;font-size:10px;color:var(--cobalt);}
+  .svc .inc{font-size:10px;color:var(--mist);border-top:1px dashed var(--line);padding-top:10px;margin-bottom:14px;}
+  .svc .inc b{font-weight:400;color:var(--ink);}
+  .svc .btn{padding:11px 18px;font-size:11px;align-self:flex-start;}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media(max-width:760px){.steps{grid-template-columns:1fr 1fr;}}
+  @media(max-width:460px){.steps{grid-template-columns:1fr;}}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 18px;}
+  .step .n{font-size:11px;color:var(--cobalt);border:1px solid var(--line);border-radius:5px;padding:3px 7px;display:inline-block;margin-bottom:12px;}
+  .step h4{font-size:19px;font-style:italic;margin-bottom:6px;}
+  .step p{font-size:11px;color:var(--ink-soft);}
+
+  /* contact */
+  .contact-band{background:var(--night);color:#E8EEFB;padding:84px 22px;position:relative;overflow:hidden;}
+  .contact-band::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(46,107,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(46,107,255,.05) 1px,transparent 1px);background-size:26px 26px;}
+  .contact-band .inner{position:relative;max-width:600px;margin:0 auto;text-align:center;}
+  .contact-band .eyebrow{color:#2E6BFF;}
+  .contact-band h2{font-size:clamp(30px,5vw,44px);color:#fff;margin:14px 0 12px;}
+  .contact-band h2 em{font-style:italic;color:#C99A4B;}
+  .contact-band p.sub{font-size:12.5px;color:#A9B7D6;margin-bottom:34px;}
+  form.request{text-align:left;background:rgba(11,20,36,.7);border:1px solid #1A2740;border-radius:14px;padding:28px 26px;}
+  form.request .field{margin-bottom:16px;}
+  form.request label{display:block;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#7C8AA5;margin-bottom:7px;}
+  form.request input,form.request select,form.request textarea{width:100%;font-family:'Share Tech Mono',monospace;font-size:12.5px;background:#0E1B36;color:#E8EEFB;border:1px solid #24314D;border-radius:8px;padding:12px 14px;outline:none;}
+  form.request input:focus,form.request select:focus,form.request textarea:focus{border-color:#2E6BFF;box-shadow:0 0 0 3px rgba(46,107,255,.18);}
+  form.request textarea{min-height:120px;resize:vertical;}
+  form.request .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:540px){form.request .two{grid-template-columns:1fr;}}
+  form.request button{width:100%;font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:.06em;background:#2E6BFF;color:#fff;border:1px solid #2E6BFF;border-radius:8px;padding:15px;cursor:pointer;transition:all .18s;}
+  form.request button:hover{background:#4A7DFF;box-shadow:0 0 20px rgba(46,107,255,.45);}
+  .mail-line{margin-top:22px;font-size:11px;color:#7C8AA5;}
+  .mail-line a{color:#A9B7D6;text-decoration:none;border-bottom:1px dashed #3D4A63;}
+  footer{background:var(--night);border-top:1px solid #1A2740;text-align:center;padding:26px 22px;font-size:10px;color:#7C8AA5;letter-spacing:.06em;}
+  footer .c{color:#2E6BFF;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}.svc:hover{transform:none;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="index.html">SIX·<b>CARDS</b> <span style="color:var(--mist)">/ online</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></a>
+    <div class="links">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+      <a href="index.html">← Business cards</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to dark mode" title="Toggle dark / light mode">
+        <span id="theme-ic">☾</span><span id="theme-lab">Dark</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="globe-wrap" aria-hidden="true">
+      <svg class="globe-mark" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"><circle cx="11" cy="11" r="8.5"/><ellipse cx="11" cy="11" rx="3.8" ry="8.5"/><path d="M2.5 11h17M11 2.5v17M4 6.5c4.5 2 9.5 2 14 0M4 15.5c4.5-2 9.5-2 14 0"/><g stroke="none"><g class="pd" style="animation-delay:0s"><circle class="pr" cx="6.2" cy="7.2" r="0.9" style="animation-delay:0s"/><circle cx="6.2" cy="7.2" r="0.9"/></g><g class="pd" style="animation-delay:0.7s"><circle class="pr" cx="15.6" cy="6.4" r="0.9" style="animation-delay:0.7s"/><circle cx="15.6" cy="6.4" r="0.9"/></g><g class="pd" style="animation-delay:1.4s"><circle class="pr" cx="14.4" cy="15.2" r="0.9" style="animation-delay:1.4s"/><circle cx="14.4" cy="15.2" r="0.9"/></g><g class="pd" style="animation-delay:2.1s"><circle class="pr" cx="7.6" cy="14.6" r="0.9" style="animation-delay:2.1s"/><circle cx="7.6" cy="14.6" r="0.9"/></g><g class="pd" style="animation-delay:2.8s"><circle class="pr" cx="11" cy="11" r="0.9" style="animation-delay:2.8s"/><circle cx="11" cy="11" r="0.9"/></g></g></svg>
+    </div>
+    <p class="eyebrow">Six Cards Online · Websites · Social · Ads</p>
+    <h1>Your business, <em>everywhere</em> people look.</h1>
+    <p class="lede">A simple website, social accounts that stay active, and ads that get a click. One designer, one matching brand, no tech headaches.</p>
+    <div class="hero-ctas">
+      <a class="btn solid" href="#services">See the services</a>
+      <a class="btn ghost" href="#contact">Get started</a>
+    </div>
+  </div>
+</header>
+
+<section id="services" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Three services · one matching brand</p>
+      <h2>Everything you need <em>online.</em></h2>
+      <p>Built to match your business cards, so customers see the same look on the counter, the screen and the feed.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal">
+        <span class="num">01</span>
+        <h3>Low-Maintenance Websites</h3>
+        <p>A clean, fast site for your business or company that works on phones and does not need constant fixing.</p>
+        <ul>
+          <li>One-page or multi-page design in your brand colors</li>
+          <li>Services, hours, location map &amp; contact form</li>
+          <li>Booking, menu or store links built in</li>
+          <li>Hosting &amp; domain setup help</li>
+          <li>Simple text &amp; photo updates on request</li>
+          <li>QR code that matches your business card</li>
+        </ul>
+        <p class="inc"><b>Best for:</b> local shops, trades, freelancers, small companies.</p>
+        <a class="btn solid" href="#contact" data-pick="Low-Maintenance Website">Request a website</a>
+      </div>
+      <div class="svc s2 reveal">
+        <span class="num">02</span>
+        <h3>Social Media Creation &amp; Management</h3>
+        <p>Accounts set up properly and kept active, so your business looks open, trusted and easy to find.</p>
+        <ul>
+          <li>Account creation for Instagram, Facebook, TikTok, YouTube &amp; more</li>
+          <li>Profile picture, banner &amp; highlight covers</li>
+          <li>Bio, links &amp; link-in-bio page</li>
+          <li>Post templates and a content schedule</li>
+          <li>Ongoing posting, captions &amp; hashtags</li>
+          <li>Monthly check-in on what is working</li>
+        </ul>
+        <p class="inc"><b>Best for:</b> new businesses, creators, clubs, busy owners.</p>
+        <a class="btn solid" href="#contact" data-pick="Social Media Creation & Management">Request social media</a>
+      </div>
+      <div class="svc s3 reveal">
+        <span class="num">03</span>
+        <h3>Advertisement &amp; Commercial Creations</h3>
+        <p>Ads and short promos written and designed to get a click, a call or a visit.</p>
+        <ul>
+          <li>Ads for Instagram, Facebook, Google &amp; YouTube</li>
+          <li>Short video or motion promos for your offer</li>
+          <li>Ad copy, layout and sized versions per platform</li>
+          <li>Seasonal and sale campaigns</li>
+          <li>Print-ready versions for flyers &amp; posters</li>
+          <li>QR codes to track which ad worked</li>
+        </ul>
+        <p class="inc"><b>Best for:</b> launches, sales, events, restaurants, local services.</p>
+        <a class="btn solid" href="#contact" data-pick="Advertisement & Commercial Creations">Request ads</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Simple process · no tech skills needed</p>
+      <h2>From message to <em>live.</em></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><span class="n">01</span><h4>Reach out</h4><p>Tell me about your business, your goals and what you already have online.</p></div>
+      <div class="step reveal"><span class="n">02</span><h4>Get a plan</h4><p>I send a mockup or content plan with a clear price.</p></div>
+      <div class="step reveal"><span class="n">03</span><h4>Approve &amp; pay</h4><p>Approve the design, then pay securely on Venmo.</p></div>
+      <div class="step reveal"><span class="n">04</span><h4>Go live</h4><p>Your site, accounts or ads launch, and I stay available for updates.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="contact-band" id="contact">
+  <div class="inner reveal">
+    <p class="eyebrow">Ready when you are</p>
+    <h2>Let's get you <em>online.</em></h2>
+    <p class="sub">Tell me about your business. Your request goes straight to my inbox and I will reply with next steps.</p>
+    <form class="request" action="https://formsubmit.co/digitalshiftdynamics@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New Online Request — Six Cards Online">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <div class="two">
+        <div class="field"><label for="f-name">Your name / business</label><input id="f-name" type="text" name="name" required></div>
+        <div class="field"><label for="f-email">Your email</label><input id="f-email" type="email" name="email" required></div>
+      </div>
+      <div class="field">
+        <label for="f-svc">Service</label>
+        <select id="f-svc" name="service">
+          <option>Not sure yet — help me choose</option>
+          <option>Low-Maintenance Website</option>
+          <option>Social Media Creation &amp; Management</option>
+          <option>Advertisement &amp; Commercial Creations</option>
+          <option>Full package (all three)</option>
+        </select>
+      </div>
+      <div class="field"><label for="f-msg">Your request</label><textarea id="f-msg" name="message" placeholder="What does your business do? Do you have a site or social accounts already? Any goals, colors or ideas?" required></textarea></div>
+      <button type="submit">Send request →</button>
+    </form>
+    <p class="mail-line">or write directly: <a href="mailto:digitalshiftdynamics@gmail.com">digitalshiftdynamics@gmail.com</a></p>
+  </div>
+</div>
+
+<footer>SIX·<span class="c">CARDS</span> ONLINE · © 2026 Zachary Frederic</footer>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('theme-btn'),
+        ic=document.getElementById('theme-ic'), lab=document.getElementById('theme-lab');
+    function paint(){
+      var d=root.getAttribute('data-theme')==='dark';
+      ic.textContent=d?'☀':'☾'; lab.textContent=d?'Light':'Dark';
+      btn.setAttribute('aria-label',d?'Switch to light mode':'Switch to dark mode');
+    }
+    btn.addEventListener('click',function(){
+      var n=root.getAttribute('data-theme')==='dark'?'light':'dark';
+      root.setAttribute('data-theme',n);
+      try{localStorage.setItem('sixcards-theme',n);}catch(e){}
+      paint();
+    });
+    paint();
+  })();
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  // service buttons preselect the form dropdown
+  document.querySelectorAll('[data-pick]').forEach(function(a){
+    a.addEventListener('click',function(){
+      var s=document.getElementById('f-svc'), v=a.getAttribute('data-pick');
+      for(var i=0;i<s.options.length;i++){ if(s.options[i].text===v){ s.selectedIndex=i; break; } }
+    });
+  });
+</script>
+</body>
+</html>
